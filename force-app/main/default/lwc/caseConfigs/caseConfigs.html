@@ -1,0 +1,60 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card title="Case Configs" icon-name="custom:custom63">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <span></span>
+            </div>
+            <div class="slds-col">
+                
+               <span>
+                    <lightning-button  disabled={disabled} label="Send" onclick={sendCaseConfigs} style="margin-left: 75%" variant={toggleVariant}></lightning-button>
+                </span>
+            </div>
+        </div><br/>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                   
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Label">Label</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Type">Type</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Account">Account</div>
+                    </th>                   
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={data} for:item="con">
+                    <tr key={con.Id}>
+                      
+                        <th scope="col">
+                            <div>{con.Label}</div>
+                        </th>
+                        <th scope="col">
+                            <div>{con.Type}</div>
+                        </th>
+                        <th scope="col">
+                            <div>{con.Amount}</div>
+                        </th>                       
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+        <lightning-layout>
+            <lightning-layout-item>
+                <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={prevpage}></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="grow"></lightning-layout-item>
+            <lightning-layout-item>
+                <div class="slds-align_absolute-center">{page}/{totalPage}</div></lightning-layout-item>
+            <lightning-layout-item flexibility="grow"></lightning-layout-item>
+            <lightning-layout-item>
+                <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={nextpage}></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+        </lightning-card>
+</template>
