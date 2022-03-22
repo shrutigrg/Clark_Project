@@ -22,6 +22,24 @@
 - Create/Update Case flexipage by adding Available Config and Case Config related list on the detail page.
 - Write test classes with min 85% test coverage.
 
+# Custom Objects and Fields
+- Configs__c -> Label__c , Type__c , Amount_c
+- Case_Config__c -> Label__c , Type__c , Amount_c
+
+# LWC Components
+- availableConfigs -> To display all the Configs with pagination and Add button to add the selected records to Case Config button
+- caseConfigs -> To display the Case Configs records with Send button to send the request to external service
+- paginator -> to handle events for previous and next button
+
+# Apex Classes
+- CaseConfigController - To fetch the Available and Case Configs and add Avaialble Configs to Case Configs
+- CaseConfigCalloutService -  To send the Case Config records to external system and update the Case status 
+- CaseConfigCalloutMock - Mock the external service url
+- CaseConfigCalloutTest - Test class for  CaseConfigCalloutService class
+- CaseConfigControllerTest - Test class for CaseConfigController class
+
+# Remote Site Settings
+- UpdateCase - Register the https://updatecase.requestcatcher.com/ url 
 
 # Salesforce DX Project: Next Steps
 
