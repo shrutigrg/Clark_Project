@@ -19,7 +19,7 @@
           }
   Mark the Case as closed after successful request
 10.User should not be able to send the request second time , hence disable the button once Send button is clicked
-11.Create/Update Case flexipage by adding Available Config and Case Config related list on the detail page
+11.Create/Update Case flexipage by adding Available Config and Case Config related list on the detail page.
 12.Write test classes with min 85% test coverage.
 
 
