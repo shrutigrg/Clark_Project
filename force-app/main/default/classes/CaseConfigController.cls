@@ -68,8 +68,6 @@ available configs
     
     @AuraEnabled
     public static void addCaseConfig(List<Object> selectedConfig , Id caseId){
-        system.debug('selectedConfig----'+selectedConfig);
-         system.debug('caseId----'+caseId);
         String message = '';
         List<Case_Config__c> caseConfigList = new List<Case_Config__c>();
         Map<String,Case_Config__c> caseConfigMap = new Map<String,Case_Config__c>();
