@@ -1,44 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>*</members>
+        <members>CaseConfigCalloutMock</members>
+         <members>CaseConfigCalloutService</members>
+          <members>CaseConfigCalloutTest</members>
+           <members>CaseConfigController</members>
+            <members>CaseConfigControllerTest</members>
         <name>ApexClass</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>ApexComponent</name>
     </types>
     <types>
         <members>*</members>
         <name>ApexPage</name>
     </types>
     <types>
-        <members>*</members>
-        <name>ApexTestSuite</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>*</members>
+        <members>availableConfigs</members>
+        <members>caseConfigs</members>
+        <members>paginator</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>*</members>
-        <name>StaticResource</name>
-    </types>
-    <types>
-        <members>*</members>
+        <members>Config__c</members>
+        <members>Case_Config__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Case_Config__c-Case Config Layout</members>
+        <members>Config__c-Config Layout</members>
         <name>Layout</name>
+    </types>
+    <types>
+        <members>UpdateCase</members>
+        <name>remoteSiteSetting</name>
+    </types>
+    <types>
+        <members>Case_Record_Page</members>
+        <name>Flexipage</name>
     </types>
     <version>54.0</version>
 </Package>

@@ -10,7 +10,7 @@ import { publish, MessageContext,subscribe,
     unsubscribe,
     APPLICATION_SCOPE } from 'lightning/messageService';
 
-import CONFIG_SAVED from '@salesforce/messageChannel/Saved_Config__c';
+    import CONFIG_SAVED from '@salesforce/messageChannel/Saved_Config__c';
 
 export default class AvailableConfigs extends LightningElement {
    
@@ -65,6 +65,8 @@ export default class AvailableConfigs extends LightningElement {
         
         })
         .catch(error => {
+            console.log('error---'+JSON.stringify(error));
+            console.log('no case closed');
             this.showToast('Error',error, 'error');
         });
     }
@@ -147,6 +149,10 @@ export default class AvailableConfigs extends LightningElement {
   
     displayRecordPerPage(page){
 
+        /*let's say for 2nd page, it will be => "Displaying 6 to 10 of 23 records. Page 2 of 5"
+        page = 2; pageSize = 5; startingRecord = 5, endingRecord = 10
+        so, slice(5,10) will give 5th to 9th records.
+        */
         this.startingRecord = ((page -1) * this.pageLength) ;
         this.endingRecord = (this.pageLength * page);
 
