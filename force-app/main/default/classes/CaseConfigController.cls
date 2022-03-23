@@ -8,7 +8,7 @@ public with sharing class CaseConfigController {
     /*
 * @Purpose : To get the status of the Case
 */
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static  String getCaseDetails(Id caseId){
         Case getStatus = [Select Id,status from Case where Id =:caseId];
         return getStatus.status;
@@ -20,9 +20,14 @@ public with sharing class CaseConfigController {
     @AuraEnabled
     public static String getAvailableConfig(){
         List<configWrap> configWrapList = new List<configWrap>();
+        Map<String, Case_Config__c> labelMap = new Map<String, Case_Config__c>();
         Integer rowIndex = 0;
         try {
-            List<Config__c> configList = [Select Id,Name,Label__c,Type__c,Amount__c from Config__c];
+            for(Case_Config__c cc : [Select Id,Label__c from Case_Config__c]){
+                labelMap.put(cc.Label__c, cc);
+            }
+            List<Config__c> configList = [Select Id,Name,Label__c,Type__c,Amount__c from Config__c 
+                                         where Label__c NOT IN:labelMap.keySet() ];
             for(Config__c a : configList){
                 configWrapList.add(new configWrap(a.Id,a.Label__c,a.Type__c,a.Amount__c,rowIndex));
                 rowIndex++;
@@ -63,6 +68,8 @@ available configs
     
     @AuraEnabled
     public static void addCaseConfig(List<Object> selectedConfig , Id caseId){
+        system.debug('selectedConfig----'+selectedConfig);
+         system.debug('caseId----'+caseId);
         String message = '';
         List<Case_Config__c> caseConfigList = new List<Case_Config__c>();
         Map<String,Case_Config__c> caseConfigMap = new Map<String,Case_Config__c>();
@@ -88,13 +95,14 @@ available configs
                     
                 }
             }
-            
+             system.debug('caseConfigList----'+caseConfigList);
             //check if list is empty or not
             if(caseConfigList.size()>0){
-                Database.insert(caseConfigList,false);
+                insert(caseConfigList);
             }        
         }
         catch (Exception e) {
+            system.debug('message----'+e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
     }

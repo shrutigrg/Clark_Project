@@ -67,8 +67,8 @@ export default class AvailableConfigs extends LightningElement {
         this.dispatchEvent(toastEvent);
     }
 
-    /* @wire(getRecord, { recordId: '$recordId', fields })
-     case;*/
+     @wire(getRecord, { recordId: '$recordId', fields })
+     case;
 
 
 
@@ -105,9 +105,9 @@ export default class AvailableConfigs extends LightningElement {
         }
     }
     addSelected(event) {
-
         getCaseDetails({ caseId: this.recordId })
             .then(result => {
+                console.log('result to get case update---'+result);
                 if (result != 'Closed') {
                     for (var i = 0; i < this.configList.length; i++) {
                         if (this.configList[i].isSelected) {

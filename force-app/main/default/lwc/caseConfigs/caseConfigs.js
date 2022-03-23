@@ -133,23 +133,37 @@ export default class CaseConfigs extends LightningElement {
     }
 
     sendCaseConfigs(event) {
-        this.disabled = true;
-        sendCase({ recordId: this.recordId })
+        //this.disabled = true;
+        getCaseDetails({ caseId: this.recordId })
             .then(result => {
-                getCaseDetails({ caseId: this.recordId })
-                    .then(result => {
-                        if (result == 'Closed') {
+                if (result != 'Closed') {
+                    sendCase({ recordId: this.recordId })
+                        .then(result => {
+
                             this.status = result;
-                            this.showToast('Case Status', 'Case is closed!', 'Success');
+                            this.showToast('', 'Case is successfully closed!', 'Success');
                             this.cssClass = 'slds-button slds-button_outline-brand';
                             // getRecordNotifyChange([{recordId: this.recordId}])
                             publish(this.messageContext, CONFIG_SAVED, null);
 
-                        }
-                    })
+                        })
+                        .catch(error => {
+                            this.error = error;
+                            console.log('errror inside ---' + error);
+                            this.showToast('Error', error, 'error');
+                        });
+
+                }
+                else {
+                    this.showToast('', 'Cannot send request to closed case!', 'Info');
+                    console.log('result----' + result);
+                }
+
+
             })
             .catch(error => {
                 this.error = error;
+                console.log('errror outside ---' + error);
                 this.showToast('Error', error, 'error');
             });
     }
