@@ -11,12 +11,12 @@ public with sharing class CaseConfigCalloutService  {
 * @Purpose : To pass the id as list to the future method
 */
     @AuraEnabled
-    public static String sendCase(Id recordId){
+    public static void sendCase(Id recordId){
         List<Id> recordIds = new List<Id>();
         try {            
             recordIds.add(recordId);
             updateCase(recordIds);
-            return CaseConfigController.getCaseDetails(recordId); 
+            //return CaseConfigController.getCaseDetails(recordId); 
             
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

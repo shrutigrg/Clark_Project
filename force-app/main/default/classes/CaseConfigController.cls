@@ -8,7 +8,7 @@ public with sharing class CaseConfigController {
     /*
 * @Purpose : To get the status of the Case
 */
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static  String getCaseDetails(Id caseId){
         Case getStatus = [Select Id,status from Case where Id =:caseId];
         return getStatus.status;
@@ -38,12 +38,13 @@ public with sharing class CaseConfigController {
 * @Purpose : To fetch case config records 
 */    
     @AuraEnabled
-    public static String getCaseConfig(){
+    public static String getCaseConfig(Id recordId){
         
         List<configWrap> configWrapList = new List<configWrap>();
         Integer rowIndex = 0;
         try {
-            List<Case_Config__c> configList = [Select Id,Name,Label__c,Type__c,Amount__c,Case__c from Case_Config__c];
+            List<Case_Config__c> configList = [Select Id,Name,Label__c,Type__c,Amount__c,Case__c from Case_Config__c
+                                               where Case__c =:recordId];
             for(Case_Config__c a : configList){
                 configWrapList.add(new configWrap(a.Id,a.Label__c,a.Type__c,a.Amount__c,rowIndex));
                 rowIndex++;

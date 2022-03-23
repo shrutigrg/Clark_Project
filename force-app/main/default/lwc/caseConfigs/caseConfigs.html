@@ -1,6 +1,7 @@
 <!-- sldsValidatorIgnore -->
 <template>
     <lightning-card title="Case Configs" icon-name="custom:custom63">
+        <template if:false={result}>
         <div class="slds-grid slds-gutters">
             <div class="slds-col">
                 <span></span>
@@ -12,6 +13,7 @@
                 </span>
             </div>
         </div><br/>
+       
         <table class="slds-table slds-table_cell-buffer slds-table_bordered">
             <thead>
                 <tr class="slds-line-height_reset">
@@ -44,6 +46,7 @@
                 </template>
             </tbody>
         </table>
+    
         <lightning-layout>
             <lightning-layout-item>
                 <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={prevpage}></lightning-button>
@@ -56,5 +59,6 @@
                 <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={nextpage}></lightning-button>
             </lightning-layout-item>
         </lightning-layout>
+    </template>
         </lightning-card>
 </template>
