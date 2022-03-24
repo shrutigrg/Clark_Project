@@ -1,3 +1,6 @@
+# Demo Video
+- Refer Case_Demo for short video of work
+- 
 # Tasks based on User Story
 - Create Object - “Config__c” - fields: “Label” (Text, Unique), “Type” (Text), “Amount” (Number)
 - Create Object - “Case_Config__c” - fields: “Label” (Text, Unique), “Type” (Text), “Amount”
