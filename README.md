@@ -1,3 +1,6 @@
+# Demo Video
+ Refer Case_Demo for short video of work
+
 # Tasks based on User Story
 - Create Object - “Config__c” - fields: “Label” (Text, Unique), “Type” (Text), “Amount” (Number)
 - Create Object - “Case_Config__c” - fields: “Label” (Text, Unique), “Type” (Text), “Amount”
@@ -18,7 +21,7 @@
           "amount": 10.00 }]
           }
   Mark the Case as closed after successful request
-- User should not be able to send the request second time , hence disable the button once Send button is clicked
+- User should not be able to send the request second time , hence notify the user with appropriate message.
 - Create/Update Case flexipage by adding Available Config and Case Config related list on the detail page.
 - Write test classes with min 85% test coverage.
 
@@ -29,7 +32,6 @@
 # LWC Components
 - availableConfigs -> To display all the Configs with pagination and Add button to add the selected records to Case Config button
 - caseConfigs -> To display the Case Configs records with Send button to send the request to external service
-- paginator -> to handle events for previous and next button
 
 # Apex Classes
 - CaseConfigController - To fetch the Available and Case Configs and add Avaialble Configs to Case Configs
@@ -41,13 +43,22 @@
 # Remote Site Settings
 - UpdateCase - Register the https://updatecase.requestcatcher.com/ url 
 
+# FlexiPage
+-Case_Record_Page - New lwc components added as related list and made as app default
+
+# Notes
+- Using Custom table as lightning-datatable is not supported for Mobile Applications
+- Used LWC Pub Sub model to connect two components to for auto refresh as the two components are not related i.e parent/child
+- Create a wrapper class for send the case config records to external system as there can be more than 1 record
+- User will receive notification (Case Configs cannot be added after Case is closed) if Add button is clicked after case is closed 
+- User will receive notification (Please select atleast one record to add!) if Add button is clicked without selecting any record
+- User will receive notification (Case is successfully closed!) if Send button is clicked after Case is closed hence preventing user to send request multiple times.
+
 # Salesforce DX Project: Next Steps
 
 Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
 
-## How Do You Plan to Deploy Your Changes?
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
 
 ## Configure Your Salesforce DX Project
 
