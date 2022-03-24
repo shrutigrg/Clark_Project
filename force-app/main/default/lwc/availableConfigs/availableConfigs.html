@@ -1,7 +1,7 @@
 <!-- sldsValidatorIgnore -->
 <template>
     <lightning-card title="Available Configs" icon-name="custom:custom9">
-        
+        <template if:false={data.data}>
         <div class="slds-grid slds-gutters">
             <div class="slds-col">
                 <span></span>
@@ -64,6 +64,7 @@
                 <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={nextpage}></lightning-button>
             </lightning-layout-item>
         </lightning-layout>
+        </template>
         </lightning-card>
 </template>
 <!-- sldsValidatorIgnoreNextLine -->

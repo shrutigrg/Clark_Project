@@ -4,10 +4,7 @@ import getAvailableConfig from '@salesforce/apex/CaseConfigController.getAvailab
 import addCaseConfig from '@salesforce/apex/CaseConfigController.addCaseConfig';
 import getCaseDetails from '@salesforce/apex/CaseConfigController.getCaseDetails';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import STATUS_FIELD from '@salesforce/schema/Case.Status';
-import CASE_OBJECT from '@salesforce/schema/Case';
 import {
     publish, MessageContext, subscribe,
     unsubscribe,
@@ -15,7 +12,6 @@ import {
 } from 'lightning/messageService';
 
 import CONFIG_SAVED from '@salesforce/messageChannel/Saved_Config__c';
-const fields = [STATUS_FIELD];
 
 export default class AvailableConfigs extends LightningElement {
 
@@ -23,13 +19,13 @@ export default class AvailableConfigs extends LightningElement {
     @api recordId;
     @track configList = [];
     @track data = [];
-    @track error;
+    error;
     @track selectedConfig = [];
-    @track totalRecountCount = 0;
-    @track totalPage = 1;
-    @track endingRecord = 0;
-    @track pageLength = 2;
-    @track page = 1;
+    totalRecountCount = 0;
+    totalPage = 1;
+    endingRecord = 0;
+    pageLength = 2;
+    page = 1;
     status;
     @wire(MessageContext)
     messageContext;
@@ -67,16 +63,15 @@ export default class AvailableConfigs extends LightningElement {
         this.dispatchEvent(toastEvent);
     }
 
-     @wire(getRecord, { recordId: '$recordId', fields })
-     case;
-
-
-
-
+   
     getConfig() {
         console.log(this.recordId);
         getAvailableConfig()
             .then(data => {
+                console.log('inside refresh');
+                this.totalPage=1;
+                this.page=1;
+                this.endingRecord=0;
                 this.configList = JSON.parse(data);
                 this.totalRecountCount = this.configList.length;
                 this.totalPage = Math.ceil(this.totalRecountCount / this.pageLength);
@@ -91,23 +86,15 @@ export default class AvailableConfigs extends LightningElement {
             });
     }
 
-    refresh() {
-        console.log('inside refresh' + this.caseStatus.data);
-        //return refreshApex(this.caseStatus); 
-    }
 
     handleSelected(event) {
         this.configList[event.target.value].isSelected = event.target.checked;
     }
-    allSelected(event) {
-        for (var i = 0; i < this.configList.length; i++) {
-            this.configList[i].isSelected = event.target.checked;
-        }
-    }
+   
     addSelected(event) {
+        
         getCaseDetails({ caseId: this.recordId })
             .then(result => {
-                console.log('result to get case update---'+result);
                 if (result != 'Closed') {
                     for (var i = 0; i < this.configList.length; i++) {
                         if (this.configList[i].isSelected) {
@@ -138,8 +125,9 @@ export default class AvailableConfigs extends LightningElement {
         })
             .then(result => {
                 this.addEvent = true;
+                this.selectedConfig=[];
                 publish(this.messageContext, CONFIG_SAVED, null);
-                return refreshApex(this.getConfig());
+               return refreshApex(this.data);
             })
             .catch(error => {
                 this.error = error;

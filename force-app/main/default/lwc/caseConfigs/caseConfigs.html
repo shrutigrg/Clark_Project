@@ -1,7 +1,7 @@
 <!-- sldsValidatorIgnore -->
 <template>
     <lightning-card title="Case Configs" icon-name="custom:custom63">
-        <template if:false={result}>
+        <template if:false={empty}>
         <div class="slds-grid slds-gutters">
             <div class="slds-col">
                 <span></span>
@@ -9,7 +9,7 @@
             <div class="slds-col">
                 
                <span>
-                    <lightning-button   label="Send" onclick={sendCaseConfigs} style="margin-left: 75%" variant={toggleVariant}></lightning-button>
+                    <lightning-button   label="Send" onclick={sendCaseConfigs} style="margin-left: 75%" variant=brand></lightning-button>
                 </span>
             </div>
         </div><br/>
@@ -30,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                <template for:each={data} for:item="con">
+                <template for:each={configList} for:item="con">
                     <tr key={con.Id}>
                       
                         <th scope="col">
@@ -45,20 +45,10 @@
                     </tr>
                 </template>
             </tbody>
-        </table>
-    
-        <lightning-layout>
-            <lightning-layout-item>
-                <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={prevpage}></lightning-button>
-            </lightning-layout-item>
-            <lightning-layout-item flexibility="grow"></lightning-layout-item>
-            <lightning-layout-item>
-                <div class="slds-align_absolute-center">{page}/{totalPage}</div></lightning-layout-item>
-            <lightning-layout-item flexibility="grow"></lightning-layout-item>
-            <lightning-layout-item>
-                <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={nextpage}></lightning-button>
-            </lightning-layout-item>
-        </lightning-layout>
+        </table>   
+    </template>
+    <template if:true={empty}>
+       <div class="slds-align_absolute-center slds-text-heading_small">No Records to Display</div> 
     </template>
         </lightning-card>
 </template>
