@@ -35,5 +35,9 @@
         <members>Case_Record_Page</members>
         <name>Flexipage</name>
     </types>
+    <types>
+        <members>*</members>
+        <name>LightningMessageChannel</name>
+    </types>
     <version>54.0</version>
 </Package>

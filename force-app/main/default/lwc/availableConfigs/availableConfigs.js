@@ -4,14 +4,13 @@ import getAvailableConfig from '@salesforce/apex/CaseConfigController.getAvailab
 import addCaseConfig from '@salesforce/apex/CaseConfigController.addCaseConfig';
 import getCaseDetails from '@salesforce/apex/CaseConfigController.getCaseDetails';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import {
     publish, MessageContext, subscribe,
     unsubscribe,
     APPLICATION_SCOPE
 } from 'lightning/messageService';
 
-import CONFIG_SAVED from '@salesforce/messageChannel/Saved_Config__c';
+import CONFIG_REFRESH from '@salesforce/messageChannel/Saved_Config__c';
 
 export default class AvailableConfigs extends LightningElement {
 
@@ -30,27 +29,8 @@ export default class AvailableConfigs extends LightningElement {
     @wire(MessageContext)
     messageContext;
     addEvent = false;
-
-
-
-    subscribeToMessageChannel() {
-
-        this.subscription = subscribe(
-            this.messageContext,
-            CONFIG_SAVED,
-            (message) => this.getConfig()
-
-        );
-
-    }
-
-    unsubscribeToMessageChannel() {
-        unsubscribe(this.subscription);
-        this.subscription = null;
-    }
-
+  
     connectedCallback() {
-        this.subscribeToMessageChannel();
         this.getConfig(); //load the data
     }
 
@@ -63,15 +43,15 @@ export default class AvailableConfigs extends LightningElement {
         this.dispatchEvent(toastEvent);
     }
 
-   
+
     getConfig() {
         console.log(this.recordId);
         getAvailableConfig()
             .then(data => {
                 console.log('inside refresh');
-                this.totalPage=1;
-                this.page=1;
-                this.endingRecord=0;
+                this.totalPage = 1;
+                this.page = 1;
+                this.endingRecord = 0;
                 this.configList = JSON.parse(data);
                 this.totalRecountCount = this.configList.length;
                 this.totalPage = Math.ceil(this.totalRecountCount / this.pageLength);
@@ -90,9 +70,9 @@ export default class AvailableConfigs extends LightningElement {
     handleSelected(event) {
         this.configList[event.target.value].isSelected = event.target.checked;
     }
-   
+
     addSelected(event) {
-        
+
         getCaseDetails({ caseId: this.recordId })
             .then(result => {
                 if (result != 'Closed') {
@@ -125,9 +105,10 @@ export default class AvailableConfigs extends LightningElement {
         })
             .then(result => {
                 this.addEvent = true;
-                this.selectedConfig=[];
-                publish(this.messageContext, CONFIG_SAVED, null);
-               return refreshApex(this.data);
+                this.selectedConfig = [];
+                publish(this.messageContext, CONFIG_REFRESH, null);
+                this.getConfig();
+               // return refreshApex(this.data);
             })
             .catch(error => {
                 this.error = error;
@@ -162,9 +143,4 @@ export default class AvailableConfigs extends LightningElement {
         //so for 2nd page, it will show "Displaying 6 to 10 of 23 records. Page 2 of 5"
         this.startingRecord = this.startingRecord + 1;
     }
-
-
-
-
-
 }

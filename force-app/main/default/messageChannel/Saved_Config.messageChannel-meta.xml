@@ -4,15 +4,5 @@
     <masterLabel>CaseUpdated</masterLabel>
     <description>This is a config case update Lightning Message Channel.</description>
     <isExposed>true</isExposed>
-    <lightningMessageFields>
-        <fieldName>operator</fieldName>
-        <description>This is the operator type of the manipulation</description>
-    </lightningMessageFields>
-    <lightningMessageFields>
-         <fieldName>constant</fieldName>
-        <description>This is the number for the manipulation</description>
-     </lightningMessageFields>
-
   
-
 </LightningMessageChannel>

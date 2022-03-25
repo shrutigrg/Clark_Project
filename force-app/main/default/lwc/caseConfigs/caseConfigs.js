@@ -2,7 +2,7 @@ import { LightningElement, track, wire, api } from 'lwc';
 import getCaseConfig from '@salesforce/apex/CaseConfigController.getCaseConfig';
 import sendCase from '@salesforce/apex/CaseConfigCalloutService.sendCase';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import CONFIG_SAVED from '@salesforce/messageChannel/Saved_Config__c';
+import CONFIG_REFRESH from '@salesforce/messageChannel/Saved_Config__c';
 import getCaseDetails from '@salesforce/apex/CaseConfigController.getCaseDetails';
 import {
     publish,
@@ -35,7 +35,7 @@ export default class CaseConfigs extends LightningElement {
 
         this.subscription = subscribe(
             this.messageContext,
-            CONFIG_SAVED,
+            CONFIG_REFRESH,
             (message) => this.refreshCaseConfigs(true)
 
         );
@@ -65,16 +65,14 @@ export default class CaseConfigs extends LightningElement {
     /* Server call to get the Case Config records for the Case id*/
     refreshCaseConfigs(addEvent) {
         getCaseConfig({ recordId: this.recordId })
-            .then(result => {      
-                
-                                    //promise function if no error
-                this.configList = JSON.parse(result);        
-                if(this.configList == ''){
+            .then(result => {       //promise function if no error
+                this.configList = JSON.parse(result);
+                if (this.configList == '') {
                     this.empty = true;
-                }   
-                else{ 
+                }
+                else {
                     this.empty = false;
-                }                     
+                }
                 if (addEvent) {
                     this.refreshCaseConfigs(false);
                 }
@@ -85,8 +83,6 @@ export default class CaseConfigs extends LightningElement {
                 this.showToast('Error', error, 'error');
             });
     }
-
-
 
     disconnectedCallback() {
         this.unsubscribeToMessageChannel();
