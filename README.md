@@ -41,7 +41,7 @@
 - CaseConfigControllerTest - Test class for CaseConfigController class
 
 # Remote Site Settings
-- UpdateCase - Register the https://updatecase.requestcatcher.com/ url 
+- UpdateCase - Register the https://updatecase.requestcatcher.com url 
 
 # FlexiPage
 -Case_Record_Page - New lwc components added as related list and made as app default
